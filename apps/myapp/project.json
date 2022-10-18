@@ -5,27 +5,24 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/webpack:webpack",
+      "executor": "@nrwl/esbuild:esbuild",
       "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
       "options": {
-        "target": "node",
-        "compiler": "tsc",
-        "outputPath": "dist/apps/myapp",
         "main": "apps/myapp/src/main.ts",
+        "outputPath": "dist/apps/myapp",
+        "outputFileName": "main.js",
         "tsConfig": "apps/myapp/tsconfig.app.json",
-        "assets": ["apps/myapp/src/assets"]
+        "project": "apps/myapp/package.json",
+        "assets": [],
+        "platform": "node"
       },
       "configurations": {
+        "development": {
+          "minify": false
+        },
         "production": {
-          "optimization": true,
-          "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "apps/myapp/src/environments/environment.ts",
-              "with": "apps/myapp/src/environments/environment.prod.ts"
-            }
-          ]
+          "minify": true
         }
       }
     },
